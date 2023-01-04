@@ -89,7 +89,7 @@ class TrainAdaIN:
                 content_features = self.enc(content)
                 style_features = self.enc(style)
                 realigned_content = AdaIN_realign(style_features[-1], content_features[-1])
-                pred_img = self.dec(realigned_content)
+                pred_img = self.dec(realigned_content).clip(0,1)
 
                 loss = self.adain_loss.calculate_loss(style_features, pred_img, realigned_content)
                 loss.backward()
